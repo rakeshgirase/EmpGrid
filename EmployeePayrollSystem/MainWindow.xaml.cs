@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EmployeePayrollSystem;
 
 namespace EmployeePayrollSystem
 {
@@ -23,6 +24,17 @@ namespace EmployeePayrollSystem
         public MainWindow()
         {
             InitializeComponent();
+            employeeGrid.ItemsSource = EmployeeService.GetEmployees();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

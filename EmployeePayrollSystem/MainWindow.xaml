@@ -6,7 +6,27 @@
         xmlns:local="clr-namespace:EmployeePayrollSystem"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <local:DateConverter x:Key="DateConverter"/>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Previous" HorizontalAlignment="Left" Margin="105,68,0,0" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2"/>
+        <Label Content="Employee Pay Details" HorizontalAlignment="Left" Margin="158,32,0,0" VerticalAlignment="Top" Width="201" Grid.ColumnSpan="2"/>
+        <Button Content="Next" HorizontalAlignment="Left" Margin="386,68,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" Grid.ColumnSpan="2"/>
+        <DataGrid Name="employeeGrid" HorizontalAlignment="Left" Height="100" Margin="10,159,0,0" VerticalAlignment="Top" Width="507" SelectionChanged="DataGrid_SelectionChanged" Grid.ColumnSpan="2" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Employee Id" Binding="{Binding EmpId}"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Hire Date" Binding="{Binding HireDate, Converter={StaticResource DateConverter}}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Employee Pay Details" HorizontalAlignment="Left" Margin="158,113,0,0" VerticalAlignment="Top" Width="201" Grid.ColumnSpan="2"/>
+
     </Grid>
 </Window>
