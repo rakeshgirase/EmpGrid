@@ -1,40 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using EmployeePayrollSystem;
 
 namespace EmployeePayrollSystem
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private ObservableCollection<Employee> employees;
+        private int index = 0;
+        private EmployeeService employeeService;
+
         public MainWindow()
         {
+            employeeService = new EmployeeService();
             InitializeComponent();
-            employeeGrid.ItemsSource = EmployeeService.GetEmployees();
+            Load();            
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        private async void Load() {
+            employees = await employeeService.GetEmployeesAsync();
+            employeePayGrid.ItemsSource = employees;
+            empShortDetails.ItemsSource = employees;
+            empShortDetails.SelectedItem = employees[index];
+        } 
 
+        private void Next_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (index == employees.Count - 1)
+            {
+                index = 0;                
+            }
+            else
+            {
+                ++index;
+            }
+            empShortDetails.SelectedItem = employees[index];
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Previous_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (index == 0)
+            {
+                index = employees.Count - 1;                
+            }
+            else
+            {
+            }
+            empShortDetails.SelectedItem = employees[index];
+                --index;             
+        }
 
+        private async void Refresh_Data_Grid(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Employee selectedEmployee = (Employee)empShortDetails.SelectedItem;
+            DateTime from = new DateTime();
+            DateTime to = new DateTime();
+            List<EmployeeDetails> employeeDetails = await employeeService.GetPayDetail(selectedEmployee, from, to);
+            employeePayGrid.ItemsSource = employeeDetails;
         }
     }
 }

@@ -5,28 +5,91 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmployeePayrollSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Employee Pay" Width="800" Height="800">
     <Window.Resources>
         <local:DateConverter x:Key="DateConverter"/>
+        <local:EmpConverter x:Key="EmpConverter"/>
     </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Content="Previous" HorizontalAlignment="Left" Margin="105,68,0,0" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2"/>
-        <Label Content="Employee Pay Details" HorizontalAlignment="Left" Margin="158,32,0,0" VerticalAlignment="Top" Width="201" Grid.ColumnSpan="2"/>
-        <Button Content="Next" HorizontalAlignment="Left" Margin="386,68,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" Grid.ColumnSpan="2"/>
-        <DataGrid Name="employeeGrid" HorizontalAlignment="Left" Height="100" Margin="10,159,0,0" VerticalAlignment="Top" Width="507" SelectionChanged="DataGrid_SelectionChanged" Grid.ColumnSpan="2" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False">
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="35" Margin="265,10,0,0" VerticalAlignment="Top" Width="250">
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="35" Margin="-166,114,-146,-116" VerticalAlignment="Top" Width="560">
+                <ComboBox Name="empShortDetails" ItemsSource="{Binding}" SelectedItem="{Binding selectedItem}" SelectionChanged="Refresh_Data_Grid">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="2">
+                                <TextBlock Text="{Binding EmpId}"/>
+                                <TextBlock Text=" - "/>                                
+                                <TextBlock Text="{Binding LastName}"/>
+                                <TextBlock Text=" , "/>
+                                <TextBlock Text="{Binding FirstName}"/>
+                                <TextBlock Text=" - "/>
+                                <TextBlock Text="{Binding HireDate}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Border>
+        </Border>
+        <Label Content="Pay Begin" HorizontalAlignment="Left" Margin="30,60,0,0" VerticalAlignment="Top" Width="90"/>
+        <Label Content="Pay End" HorizontalAlignment="Right" Margin="0,63,117,0" VerticalAlignment="Top" Width="90"/>
+        <TextBox Name="pay_begin_date" HorizontalAlignment="Left" Height="23" Margin="100,63,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="pay_end_date" HorizontalAlignment="Left" Height="23" Margin="645,66,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Previous" HorizontalAlignment="Left" Margin="30,98,0,0" VerticalAlignment="Top" Width="75" Click="Previous_Button_Click"/>
+        <Button Content="Next" HorizontalAlignment="Left" Margin="670,98,0,0" VerticalAlignment="Top" Width="75" Click="Next_Button_Click"/>
+        
+        <DataGrid x:Name="employeePayGrid" HorizontalAlignment="Left" Height="100" Margin="100,215,0,0" VerticalAlignment="Top" Width="565" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}">
             <DataGrid.Columns>
-
-                <DataGridTextColumn Header="Employee Id" Binding="{Binding EmpId}"/>
+                <DataGridTextColumn Header="#" Binding="{Binding index}"/>
+                <DataGridTextColumn Header="Emp #" Binding="{Binding EmpId}"/>
                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
                 <DataGridTextColumn Header="Hire Date" Binding="{Binding HireDate, Converter={StaticResource DateConverter}}"/>
+                <DataGridTextColumn Header="Work Date" Binding="{Binding WorkDate, Converter={StaticResource DateConverter}}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="Employee Pay Details" HorizontalAlignment="Left" Margin="158,113,0,0" VerticalAlignment="Top" Width="201" Grid.ColumnSpan="2"/>
-
+        <Label HorizontalAlignment="Left" Margin="560,350,0,0" VerticalAlignment="Top"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="30" Margin="595,341,0,0" VerticalAlignment="Top" Width="70">
+            <Label Content="Total Hours" Margin="0,0,104,0"/>
+        </Border>
+        <Label Content="Total Hours" HorizontalAlignment="Left" Margin="505,342,0,0" VerticalAlignment="Top" Width="90"/>
+        <Button Content="Apply" HorizontalAlignment="Left" Margin="365,410,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </Window>

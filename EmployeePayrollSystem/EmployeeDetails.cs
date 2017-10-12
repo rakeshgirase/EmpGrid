@@ -1,59 +1,57 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeePayrollSystem
 {
-   public class Employee : INotifyPropertyChanged
+    [Table("EmployeeHours")]
+    public class EmployeeDetails : INotifyPropertyChanged
     {
-        
-        private int _empId;
+
+        private Employee _employee;
         [Key]
-        public int EmpId
-        {
-            get { return _empId; }
-            set
-            {
-                _empId = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private String _firstName;
-        [Column("EmpFirstName")]
-        public String FirstName
-        {
-            get { return _firstName; }
-            set
-            {
-                _firstName = value;
+        public Employee Employee {
+            get { return _employee; }
+            set {
+                _employee = value;
                 RaisePropertyChanged();
             }
         }
         
-        private String _lastName;
-        [Column("EmpLastName")]
-        public String LastName
+        private DateTime _workDate;
+        [Key]
+        public DateTime Workdate
         {
-            get { return _lastName; }
+            get { return _workDate; }
             set
             {
-                _lastName = value;
+                _workDate = value;
                 RaisePropertyChanged();
+
             }
         }
 
-        private DateTime _hireDate;
-        public DateTime HireDate
+        private String _description;
+        public String description
         {
-            get { return _hireDate; }
+            get { return _description; }
             set
             {
-                _hireDate = value;
+                _description = value;
+                RaisePropertyChanged();
+
+            }
+        }
+
+        private int _hoursWorked;
+        public int hoursWorked
+        {
+            get { return _hoursWorked; }
+            set
+            {
+                _hoursWorked = value;
                 RaisePropertyChanged();
 
             }
