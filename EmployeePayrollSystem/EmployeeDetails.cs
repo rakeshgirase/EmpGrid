@@ -11,7 +11,7 @@ namespace EmployeePayrollSystem
     {
 
         private Employee _employee;
-        [Key]
+        [ForeignKey("EmpId")]
         public Employee Employee {
             get { return _employee; }
             set {
@@ -19,10 +19,13 @@ namespace EmployeePayrollSystem
                 RaisePropertyChanged();
             }
         }
-        
+
+        [Column("EmpId")]
+        public int EmpId { get; set; }
+
         private DateTime _workDate;
         [Key]
-        public DateTime Workdate
+        public DateTime WorkDate
         {
             get { return _workDate; }
             set
@@ -34,7 +37,7 @@ namespace EmployeePayrollSystem
         }
 
         private String _description;
-        public String description
+        public String Description
         {
             get { return _description; }
             set
@@ -46,7 +49,7 @@ namespace EmployeePayrollSystem
         }
 
         private int _hoursWorked;
-        public int hoursWorked
+        public int HoursWorked
         {
             get { return _hoursWorked; }
             set

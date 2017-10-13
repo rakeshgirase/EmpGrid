@@ -69,6 +69,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EmployeeDetailsEnrichService.cs" />
     <Compile Include="EmpConverter.cs" />
     <Compile Include="DateConverter.cs" />
     <Compile Include="EmpDbContext.cs" />

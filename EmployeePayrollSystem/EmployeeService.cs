@@ -46,7 +46,7 @@ namespace EmployeePayrollSystem
         {
             using (var ctx = new EmpDbContext())
             {
-                return await ctx.EmployeeDetails.AsNoTracking().ToListAsync();
+                return await ctx.EmployeeDetails.Include(e=>e.Employee).Where(ed => (ed.EmpId == selectedEmployee.EmpId)).Where(ed=>ed.WorkDate>=from && ed.WorkDate<=to).AsNoTracking().ToListAsync();
             }
         }
     }

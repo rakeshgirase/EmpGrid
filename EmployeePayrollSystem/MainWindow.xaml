@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EmployeePayrollSystem"
+        xmlns:local="clr-namespace:EmployeePayrollSystem"        
         mc:Ignorable="d"
         Title="Employee Pay" Width="800" Height="800">
     <Window.Resources>
@@ -11,6 +11,7 @@
         <local:EmpConverter x:Key="EmpConverter"/>
     </Window.Resources>
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -54,12 +55,12 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="2">
                                 <TextBlock Text="{Binding EmpId}"/>
-                                <TextBlock Text=" - "/>                                
+                                <TextBlock Text=" - "/>
                                 <TextBlock Text="{Binding LastName}"/>
                                 <TextBlock Text=" , "/>
                                 <TextBlock Text="{Binding FirstName}"/>
                                 <TextBlock Text=" - "/>
-                                <TextBlock Text="{Binding HireDate}"/>
+                                <TextBlock Text="{Binding HireDate, Converter={StaticResource DateConverter}}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
@@ -68,28 +69,28 @@
         </Border>
         <Label Content="Pay Begin" HorizontalAlignment="Left" Margin="30,60,0,0" VerticalAlignment="Top" Width="90"/>
         <Label Content="Pay End" HorizontalAlignment="Right" Margin="0,63,117,0" VerticalAlignment="Top" Width="90"/>
-        <TextBox Name="pay_begin_date" HorizontalAlignment="Left" Height="23" Margin="100,63,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="pay_end_date" HorizontalAlignment="Left" Height="23" Margin="645,66,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Previous" HorizontalAlignment="Left" Margin="30,98,0,0" VerticalAlignment="Top" Width="75" Click="Previous_Button_Click"/>
-        <Button Content="Next" HorizontalAlignment="Left" Margin="670,98,0,0" VerticalAlignment="Top" Width="75" Click="Next_Button_Click"/>
-        
-        <DataGrid x:Name="employeePayGrid" HorizontalAlignment="Left" Height="100" Margin="100,215,0,0" VerticalAlignment="Top" Width="565" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}">
+        <DatePicker Name="pay_start_date" HorizontalAlignment="Left" Height="23" Margin="100,63,0,0" Text="TextBox" VerticalAlignment="Top" Width="120" SelectedDateChanged="Pay_Start_Date_Changed"/>
+        <DatePicker Name="pay_end_date" HorizontalAlignment="Left" Height="23" Margin="645,66,0,0" Text="TextBox" VerticalAlignment="Top" Width="120" SelectedDateChanged="Pay_End_Date_Changed"/>
+        <Button Content="Previous" HorizontalAlignment="Left" Margin="19,132,0,0" VerticalAlignment="Top" Width="75" Click="Previous_Button_Click"/>
+        <Button Content="Next" HorizontalAlignment="Left" Margin="672,132,0,0" VerticalAlignment="Top" Width="75" Click="Next_Button_Click"/>
+
+        <DataGrid x:Name="employeePayGrid" Margin="12,200,12,200" HorizontalAlignment="Center" VerticalAlignment="Center" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" ItemsSource="{Binding}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Binding="{Binding index}"/>
                 <DataGridTextColumn Header="Emp #" Binding="{Binding EmpId}"/>
-                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
-                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="Hire Date" Binding="{Binding HireDate, Converter={StaticResource DateConverter}}"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding Employee.FirstName}"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding Employee.LastName}"/>
+                <DataGridTextColumn Header="Hire Date" Binding="{Binding Employee.HireDate, Converter={StaticResource DateConverter}}"/>
                 <DataGridTextColumn Header="Work Date" Binding="{Binding WorkDate, Converter={StaticResource DateConverter}}"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
                 <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label HorizontalAlignment="Left" Margin="560,350,0,0" VerticalAlignment="Top"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="30" Margin="595,341,0,0" VerticalAlignment="Top" Width="70">
-            <Label Content="Total Hours" Margin="0,0,104,0"/>
+        <Label Name="totalHours" Content="Total Hours" HorizontalAlignment="Left" Margin="480,10,0,-33" VerticalAlignment="Top" Width="90" Grid.Row="27"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="30" Margin="600,10,0,-36" VerticalAlignment="Top" Width="70" Grid.Row="27">
+
         </Border>
-        <Label Content="Total Hours" HorizontalAlignment="Left" Margin="505,342,0,0" VerticalAlignment="Top" Width="90"/>
-        <Button Content="Apply" HorizontalAlignment="Left" Margin="365,410,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Apply" HorizontalAlignment="Left" Margin="361,46,0,-67" VerticalAlignment="Top" Width="75" Grid.Row="27" Click="Save"/>
     </Grid>
 </Window>
