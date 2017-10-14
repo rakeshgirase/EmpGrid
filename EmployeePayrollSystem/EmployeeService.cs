@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EmployeePayrollSystem
@@ -27,17 +26,8 @@ namespace EmployeePayrollSystem
             return employees;
         }
 
-        public static Collection<Employee> getPlainEmployees() {
-            Collection<Employee> employees = new Collection<Employee>();
-            employees.Add(new Employee() { EmpId = 1, FirstName = "Rakesh", LastName = "Girase", HireDate = new DateTime(2017, 10, 15) });
-            employees.Add(new Employee() { EmpId = 2, FirstName = "Rakesh", LastName = "Girase", HireDate = new DateTime(2017, 10, 16) });
-            employees.Add(new Employee() { EmpId = 3, FirstName = "Rakesh", LastName = "Girase", HireDate = new DateTime(2017, 10, 17) });
-            employees.Add(new Employee() { EmpId = 4, FirstName = "Rakesh", LastName = "Girase", HireDate = new DateTime(2017, 10, 18) });
-            return employees;
-        }
-
         public static async Task<List<Employee>> getEmpFromDatabaseAsync() {
-            using (var ctx = new EmpDbContext()) {
+            using (var ctx = new EmpDbContext()) {                
                 return await ctx.Employee.AsNoTracking().ToListAsync(); 
             }
         }
@@ -47,6 +37,17 @@ namespace EmployeePayrollSystem
             using (var ctx = new EmpDbContext())
             {
                 return await ctx.EmployeeDetails.Include(e=>e.Employee).Where(ed => (ed.EmpId == selectedEmployee.EmpId)).Where(ed=>ed.WorkDate>=from && ed.WorkDate<=to).AsNoTracking().ToListAsync();
+            }
+        }
+
+        public async void saveEmployeeDetails(List<EmployeeDetails> employeeDetails) {
+            using (var ctx = new EmpDbContext())
+            {
+                foreach (var employeeDetail in employeeDetails) {
+                    ctx.EmployeeDetails.Attach(employeeDetail);
+                    ctx.Entry(employeeDetail).State = EntityState.Modified;
+                    await ctx.SaveChangesAsync();
+                }
             }
         }
     }

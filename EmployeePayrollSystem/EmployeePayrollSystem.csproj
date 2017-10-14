@@ -69,12 +69,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BaseModel.cs" />
+    <Compile Include="MinutesToHoursConverter.cs" />
     <Compile Include="EmployeeDetailsEnrichService.cs" />
     <Compile Include="EmpConverter.cs" />
     <Compile Include="DateConverter.cs" />
     <Compile Include="EmpDbContext.cs" />
     <Compile Include="EmployeeDetails.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="EmployeeDetailsWrapper.cs" />
     <Compile Include="EmployeeService.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

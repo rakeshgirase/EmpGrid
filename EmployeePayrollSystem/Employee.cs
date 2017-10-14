@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeePayrollSystem
 {
-   public class Employee : INotifyPropertyChanged
+   public class Employee : BaseModel
     {
         
         private int _empId;
@@ -56,16 +56,6 @@ namespace EmployeePayrollSystem
                 _hireDate = value;
                 RaisePropertyChanged();
 
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged([CallerMemberName] string caller = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(caller));
             }
         }
    }

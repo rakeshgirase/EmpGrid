@@ -18,7 +18,7 @@ namespace EmployeePayrollSystem
             InitializeComponent();
             Load();
             pay_start_date.SelectedDate = getLastDay(DayOfWeek.Sunday);
-            pay_end_date.SelectedDate = pay_start_date.SelectedDate.Value.AddDays(14);
+            pay_end_date.SelectedDate = pay_start_date.SelectedDate.Value.AddDays(13);
         }
 
         public DateTime getLastDay(DayOfWeek day) {
@@ -31,7 +31,7 @@ namespace EmployeePayrollSystem
         private async void Load() {
             employees = await employeeService.GetEmployeesAsync();
             empShortDetails.ItemsSource = employees;
-            empShortDetails.SelectedItem = employees[index];            
+            empShortDetails.SelectedItem = employees[index];
         }
 
         private void Next_Button_Click(object sender, RoutedEventArgs e)
@@ -55,7 +55,6 @@ namespace EmployeePayrollSystem
             }
             else
             {
-
                 --index;
             }
             empShortDetails.SelectedItem = employees[index];             
@@ -70,14 +69,12 @@ namespace EmployeePayrollSystem
             DateTime from = pay_start_date.SelectedDate.Value;
             DateTime to = pay_end_date.SelectedDate.Value;
             employeeDetails = await employeeService.GetPayDetail(selectedEmployee, from, to);
-            List<EmployeeDetails> enrichedEmployeeDetails = new EmployeeDetailsEnrichService().enrich(employeeDetails, selectedEmployee, from, to);
-            totalHours.Content = 0;
-            List<int> numbers = new List<int>();
+            List<EmployeeDetailsWrapper> enrichedEmployeeDetails = new EmployeeDetailsEnrichService().enrich(employeeDetails, selectedEmployee, from, to);
             totalHours.Content = sumWorkHours(enrichedEmployeeDetails);
             employeePayGrid.ItemsSource = enrichedEmployeeDetails;
         }
 
-        private int sumWorkHours(List<EmployeeDetails> enrichedEmployeeDetails)
+        private int sumWorkHours(List<EmployeeDetailsWrapper> enrichedEmployeeDetails)
         {
             int totalWorkHours = 0;
             foreach (var empDetails in enrichedEmployeeDetails ) {
@@ -88,17 +85,17 @@ namespace EmployeePayrollSystem
 
         public void Pay_Start_Date_Changed(object sender, EventArgs e)
         {
-            if (pay_end_date.SelectedDate!=null && (pay_end_date.SelectedDate.Value - pay_start_date.SelectedDate.Value).Days != 14) {
-                pay_end_date.SelectedDate = pay_start_date.SelectedDate.Value.AddDays(14);
+            if (pay_end_date.SelectedDate!=null && (pay_end_date.SelectedDate.Value - pay_start_date.SelectedDate.Value).Days != 13) {
+                pay_end_date.SelectedDate = pay_start_date.SelectedDate.Value.AddDays(13);
             }
             
         }
 
         public void Pay_End_Date_Changed(object sender, EventArgs e)
         {
-            if (pay_end_date.SelectedDate != null && (pay_end_date.SelectedDate.Value - pay_start_date.SelectedDate.Value).Days != 14)
+            if (pay_end_date.SelectedDate != null && (pay_end_date.SelectedDate.Value - pay_start_date.SelectedDate.Value).Days != 13)
             {
-                pay_start_date.SelectedDate = pay_end_date.SelectedDate.Value.AddDays(-14);
+                pay_start_date.SelectedDate = pay_end_date.SelectedDate.Value.AddDays(-13);
             }            
         }
 

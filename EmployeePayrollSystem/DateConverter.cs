@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace EmployeePayrollSystem
@@ -15,8 +11,7 @@ namespace EmployeePayrollSystem
             DateTime date = (DateTime)value;
             return date.ToString("d");
         }
-
-
+        
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string stringValue = value as string;

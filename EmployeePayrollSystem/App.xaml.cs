@@ -13,5 +13,10 @@ namespace EmployeePayrollSystem
     /// </summary>
     public partial class App : Application
     {
+
+        private void Application_DispatcherUnhandledExceptionHandler(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
+            MessageBox.Show("Unexpected error occurred. Please inform the admin." + Environment.NewLine + e.Exception.Message, "Unexpected Error");
+            e.Handled = true;
+        }
     }
 }

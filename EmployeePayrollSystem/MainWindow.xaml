@@ -9,9 +9,10 @@
     <Window.Resources>
         <local:DateConverter x:Key="DateConverter"/>
         <local:EmpConverter x:Key="EmpConverter"/>
+        <local:MinutesToHoursConverter x:Key="MinutesToHoursConverter"/>
     </Window.Resources>
+    <ScrollViewer>
     <Grid>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -42,15 +43,9 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="35" Margin="265,10,0,0" VerticalAlignment="Top" Width="250">
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="35" Margin="-166,114,-146,-116" VerticalAlignment="Top" Width="560">
-                <ComboBox Name="empShortDetails" ItemsSource="{Binding}" SelectedItem="{Binding selectedItem}" SelectionChanged="Refresh_Data_Grid">
+                <ComboBox Name="empShortDetails" ItemsSource="{Binding}" SelectionChanged="Refresh_Data_Grid">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="2">
@@ -83,14 +78,16 @@
                 <DataGridTextColumn Header="Hire Date" Binding="{Binding Employee.HireDate, Converter={StaticResource DateConverter}}"/>
                 <DataGridTextColumn Header="Work Date" Binding="{Binding WorkDate, Converter={StaticResource DateConverter}}"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked}"/>
+                    <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked, Converter={StaticResource MinutesToHoursConverter}}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label HorizontalAlignment="Left" Margin="560,350,0,0" VerticalAlignment="Top"/>
-        <Label Name="totalHours" Content="Total Hours" HorizontalAlignment="Left" Margin="480,10,0,-33" VerticalAlignment="Top" Width="90" Grid.Row="27"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="30" Margin="600,10,0,-36" VerticalAlignment="Top" Width="70" Grid.Row="27">
-
-        </Border>
-        <Button Content="Apply" HorizontalAlignment="Left" Margin="361,46,0,-67" VerticalAlignment="Top" Width="75" Grid.Row="27" Click="Save"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Label Content="Total Hours" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Grid.Row="27"/>
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="70" Grid.Row="27">
+                <Label Name="totalHours" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </Border>            
+        </StackPanel>
+        <Button Name="Apply" Content="Apply" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Grid.Row="27" Click="Save"/>
     </Grid>
+    </ScrollViewer>
 </Window>

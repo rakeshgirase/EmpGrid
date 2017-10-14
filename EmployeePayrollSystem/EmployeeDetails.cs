@@ -1,15 +1,12 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeePayrollSystem
 {
     [Table("EmployeeHours")]
-    public class EmployeeDetails : INotifyPropertyChanged
+    public class EmployeeDetails : BaseModel
     {
-
         private Employee _employee;
         [ForeignKey("EmpId")]
         public Employee Employee {
@@ -49,6 +46,7 @@ namespace EmployeePayrollSystem
         }
 
         private int _hoursWorked;
+        [Required]        
         public int HoursWorked
         {
             get { return _hoursWorked; }
@@ -57,16 +55,6 @@ namespace EmployeePayrollSystem
                 _hoursWorked = value;
                 RaisePropertyChanged();
 
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged([CallerMemberName] string caller = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(caller));
             }
         }
    }
