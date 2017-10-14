@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace EmployeePayrollSystem
     class EmployeeDetailsEnrichService
     {
 
-        public List<EmployeeDetailsWrapper> enrich(List<EmployeeDetails> employeeDetails, Employee employee, DateTime from, DateTime to)
+        public ObservableCollection<EmployeeDetailsWrapper> enrich(List<EmployeeDetails> employeeDetails, Employee employee, DateTime from, DateTime to)
         {
             List<EmployeeDetailsWrapper> enrichedEmployeeDetails = employeeDetails.Select(e=>new EmployeeDetailsWrapper(e)).ToList();
             for (DateTime date = from; date <= to; date = date.AddDays(1)) {
@@ -22,7 +23,7 @@ namespace EmployeePayrollSystem
                     enrichedEmployeeDetails.Add(new EmployeeDetailsWrapper(ed));
                 }
             }
-            return enrichedEmployeeDetails.OrderBy(e=>e.WorkDate).ToList();
+            return new ObservableCollection<EmployeeDetailsWrapper>(enrichedEmployeeDetails.OrderBy(e => e.WorkDate).ToList()); ;
         }
     }
 }

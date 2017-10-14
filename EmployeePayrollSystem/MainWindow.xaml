@@ -41,12 +41,12 @@
 
         <DataGrid x:Name="employeePayGrid" Margin="12,200,12,200" HorizontalAlignment="Center" VerticalAlignment="Center" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" ItemsSource="{Binding}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="#" Binding="{Binding index}"/>
-                <DataGridTextColumn Header="Emp #" Binding="{Binding EmpId}"/>
-                <DataGridTextColumn Header="First Name" Binding="{Binding Employee.FirstName}"/>
-                <DataGridTextColumn Header="Last Name" Binding="{Binding Employee.LastName}"/>
-                <DataGridTextColumn Header="Hire Date" Binding="{Binding Employee.HireDate, Converter={StaticResource DateConverter}}"/>
-                <DataGridTextColumn Header="Work Date" Binding="{Binding WorkDate, Converter={StaticResource DateConverter}}"/>
+                <DataGridTextColumn Header="#" Binding="{Binding index}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Emp #" Binding="{Binding EmpId}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="First Name" Binding="{Binding Employee.FirstName}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding Employee.LastName}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Hire Date" Binding="{Binding Employee.HireDate, Converter={StaticResource DateConverter}}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Work Date" Binding="{Binding WorkDate, Converter={StaticResource DateConverter}}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
                     <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked, Converter={StaticResource MinutesToHoursConverter}}"/>
             </DataGrid.Columns>

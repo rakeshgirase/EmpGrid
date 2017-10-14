@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace EmployeePayrollSystem
 {
     class EmployeeDetailsWrapper: BaseModel, INotifyDataErrorInfo
     {
+        private Regex DESCRIPTION_REGULAR_EXPRESSION = new Regex("Shift-[A-D];+");
         public EmployeeDetailsWrapper(EmployeeDetails employeeDetails)
         {
             EmployeeDetails = employeeDetails;
@@ -19,7 +21,12 @@ namespace EmployeePayrollSystem
 
         public Employee Employee { get { return EmployeeDetails.Employee; } }
 
-        public string Description { get { return EmployeeDetails.Description; } }
+        public string Description { get { return EmployeeDetails.Description; }
+            set {
+                EmployeeDetails.Description = value;
+                ValidateProperty(nameof(Description));
+            }
+        }
 
         public int HoursWorked { get { return EmployeeDetails.HoursWorked; }
         set {
@@ -36,15 +43,25 @@ namespace EmployeePayrollSystem
         private void ValidateProperty(string propertyName)
         {
             clearErrors(propertyName);
-            if (propertyName.Equals("HoursWorked")) {
+            if (propertyName.Equals("HoursWorked"))
+            {
                 if (HoursWorked < 1 || HoursWorked > 600)
                 {
                     AddError(propertyName, "Hours Worked should be between 1 and 600!!!");
                 }
             }
+            else if (propertyName.Equals("Description"))
+            {
+                Match match = DESCRIPTION_REGULAR_EXPRESSION.Match(Description);
+                if (!match.Success)
+                {
+                    AddError(propertyName, "Description field can only Have Shift-A, Shift-B, Shift-C or Shift-D separated with ;");
+                }
+            }
         }
 
         private Dictionary<String, List<String>> _errorsByPropertyName = new Dictionary<string, List<string>>();
+
         public bool HasErrors => _errorsByPropertyName.Any();
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;

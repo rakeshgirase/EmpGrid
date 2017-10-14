@@ -16,12 +16,12 @@ namespace EmployeePayrollSystem
                 RaisePropertyChanged();
             }
         }
-
-        [Column("EmpId")]
+                
+        [Column(Order=0), Key]
         public int EmpId { get; set; }
 
         private DateTime _workDate;
-        [Key]
+        [Column(Order = 1), Key]
         public DateTime WorkDate
         {
             get { return _workDate; }

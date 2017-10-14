@@ -11,6 +11,7 @@ namespace EmployeePayrollSystem
         private int index = 0;
         private EmployeeService employeeService;
         private List<EmployeeDetails> employeeDetails;
+        private ObservableCollection<EmployeeDetailsWrapper> enrichedEmployeeDetails;
 
         public MainWindow()
         {
@@ -69,12 +70,12 @@ namespace EmployeePayrollSystem
             DateTime from = pay_start_date.SelectedDate.Value;
             DateTime to = pay_end_date.SelectedDate.Value;
             employeeDetails = await employeeService.GetPayDetail(selectedEmployee, from, to);
-            List<EmployeeDetailsWrapper> enrichedEmployeeDetails = new EmployeeDetailsEnrichService().enrich(employeeDetails, selectedEmployee, from, to);
+            enrichedEmployeeDetails = new EmployeeDetailsEnrichService().enrich(employeeDetails, selectedEmployee, from, to);
             totalHours.Content = sumWorkHours(enrichedEmployeeDetails);
             employeePayGrid.ItemsSource = enrichedEmployeeDetails;
         }
 
-        private int sumWorkHours(List<EmployeeDetailsWrapper> enrichedEmployeeDetails)
+        private int sumWorkHours(ObservableCollection<EmployeeDetailsWrapper> enrichedEmployeeDetails)
         {
             int totalWorkHours = 0;
             foreach (var empDetails in enrichedEmployeeDetails ) {
@@ -101,7 +102,7 @@ namespace EmployeePayrollSystem
 
         private void Save(object sender, RoutedEventArgs e)
         {
-
+            employeeService.saveEmployeeDetails(enrichedEmployeeDetails);            
         }
     }
 }

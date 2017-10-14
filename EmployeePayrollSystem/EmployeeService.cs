@@ -40,12 +40,13 @@ namespace EmployeePayrollSystem
             }
         }
 
-        public async void saveEmployeeDetails(List<EmployeeDetails> employeeDetails) {
+        public async void saveEmployeeDetails(ObservableCollection<EmployeeDetailsWrapper> employeeDetailsWrappers) {
             using (var ctx = new EmpDbContext())
             {
-                foreach (var employeeDetail in employeeDetails) {
-                    ctx.EmployeeDetails.Attach(employeeDetail);
-                    ctx.Entry(employeeDetail).State = EntityState.Modified;
+                foreach (var employeeDetailsWrapper in employeeDetailsWrappers) {
+                    EmployeeDetails employeeDetails = employeeDetailsWrapper.EmployeeDetails;
+                    ctx.EmployeeDetails.Attach(employeeDetails);
+                    ctx.Entry(employeeDetails).State = EntityState.Modified;
                     await ctx.SaveChangesAsync();
                 }
             }
