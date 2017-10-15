@@ -51,6 +51,7 @@ namespace EmployeePayrollSystem
                     if (recordFromDatabase == null)//Add Record
                     {
                         ctx.EmployeeDetails.Add(changedItem);
+                        ctx.Entry(changedItem.Employee).State = EntityState.Unchanged;
                         ctx.Entry(changedItem).State = EntityState.Added;
                         await ctx.SaveChangesAsync();
                     }

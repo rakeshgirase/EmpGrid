@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Windows;
 
 namespace EmployeePayrollSystem
@@ -14,11 +13,9 @@ namespace EmployeePayrollSystem
         private ObservableCollection<EmployeeDetailsWrapper> enrichedEmployeeDetails;
         private EmployeeService employeeService;
         private EmployeeDetailsEnrichService employeeDetailsEnrichService;
-        private static MainWindow mainWindow;
         public MainWindow()
         {
-            InitializeComponent();
-            mainWindow = this;
+            InitializeComponent();           
             employeeService = new EmployeeService();
             employeeDetailsEnrichService = new EmployeeDetailsEnrichService();
             Loaded += LoadData;            
@@ -76,23 +73,26 @@ namespace EmployeePayrollSystem
             if (selectedEmployee == null) {
                 selectedEmployee = employees[0];
             }
-            DateTime from = pay_start_date.SelectedDate.Value;
-            DateTime to = pay_end_date.SelectedDate.Value;
+            DateTime from = pay_start_date.SelectedDate.Value.Date;
+            DateTime to = pay_end_date.SelectedDate.Value.Date;
             employeeDetailsFromDatabase = await employeeService.GetPayDetail(selectedEmployee, from, to);
             enrichedEmployeeDetails = employeeDetailsEnrichService.enrich(employeeDetailsFromDatabase, selectedEmployee, from, to);
-            //totalHours.Content = SumWorkHours(enrichedEmployeeDetails);
+            SumWorkHours();
             employeePayGrid.ItemsSource = enrichedEmployeeDetails;
             ChangeTracker.Clear();
         }
 
-        public static void SumWorkHours()
+        public int SumWorkHours()
         {
-            int totalWorkHours = 0;
-            foreach (var empDetails in mainWindow.enrichedEmployeeDetails)
-            {
-                totalWorkHours += empDetails.HoursWorked;
-            }
-            mainWindow.totalHours.Content = totalWorkHours;
+            int temp = 0;
+            //foreach (var empDetails in enrichedEmployeeDetails)
+            //{
+              //  temp += empDetails.HoursWorked;
+            //}
+
+            return temp;
+            //totalHours.Content = totalWorkHours;
+             
         }
 
         public void Pay_Start_Date_Changed(object sender, EventArgs e)
