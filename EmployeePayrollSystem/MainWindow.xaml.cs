@@ -14,7 +14,6 @@ namespace EmployeePayrollSystem
         private ObservableCollection<EmployeeDetailsWrapper> enrichedEmployeeDetails;
         private EmployeeService employeeService;
         private EmployeeDetailsEnrichService employeeDetailsEnrichService;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -80,6 +79,7 @@ namespace EmployeePayrollSystem
             employeeDetailsFromDatabase = await employeeService.GetPayDetail(selectedEmployee, from, to);
             enrichedEmployeeDetails = employeeDetailsEnrichService.enrich(employeeDetailsFromDatabase, selectedEmployee, from, to);
             totalHours.Content = sumWorkHours(enrichedEmployeeDetails);
+            totalHours.DataContext = enrichedEmployeeDetails;
             employeePayGrid.ItemsSource = enrichedEmployeeDetails;
             ChangeTracker.Clear();
         }

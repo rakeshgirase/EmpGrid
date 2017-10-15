@@ -47,19 +47,27 @@ namespace EmployeePayrollSystem
             {
                 foreach (var changedItem in changedItems)
                 {
-                    if (employeeDetailsFromDatabase.Find(e => e.WorkDate.ToShortDateString().Equals(changedItem.WorkDate.ToShortDateString())) == null)
+                    EmployeeDetails recordFromDatabase = employeeDetailsFromDatabase.Find(e => e.WorkDate.ToShortDateString().Equals(changedItem.WorkDate.ToShortDateString()));
+                    if (recordFromDatabase == null)
                     {
                         ctx.EmployeeDetails.Add(changedItem);
                         ctx.Entry(changedItem).State = EntityState.Added;
+                        await ctx.SaveChangesAsync();
                     }
-                    else
+                    else if(isChangedItemActuallyUpdated(recordFromDatabase, changedItem))
                     {
                         ctx.EmployeeDetails.Attach(changedItem);
                         ctx.Entry(changedItem).State = EntityState.Modified;
+                        await ctx.SaveChangesAsync();
                     }                        
-                    await ctx.SaveChangesAsync();
+                    
                 }
             }
+        }
+
+        private bool isChangedItemActuallyUpdated(EmployeeDetails recordFromDatabase, EmployeeDetails changedItem)
+        {
+            return recordFromDatabase.HoursWorked != changedItem.HoursWorked || recordFromDatabase.Description != changedItem.Description;
         }
     }
 }

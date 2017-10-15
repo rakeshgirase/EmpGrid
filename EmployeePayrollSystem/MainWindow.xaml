@@ -48,14 +48,14 @@
                     <DataGridTextColumn Header="Hire Date" Binding="{Binding Employee.HireDate, Converter={StaticResource DateConverter}}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Work Date" Binding="{Binding WorkDate, Converter={StaticResource DateConverter}}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                    <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked, Converter={StaticResource MinutesToHoursConverter}}"/>
+                    <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked, Converter={StaticResource MinutesToHoursConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Label Content="Total Hours" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Grid.Row="27"/>
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="70" Grid.Row="27">
-                <Label Name="totalHours" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            </Border>            
+                    <Label Name="totalHours" HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding ElementName=employeePayGrid, Path=HoursWorked.Sum, UpdateSourceTrigger=PropertyChanged}"/>
+            </Border>
         </StackPanel>
         <Button Name="Apply" Content="Apply" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Grid.Row="27" Click="Save"/>
     </Grid>

@@ -13,7 +13,7 @@ namespace EmployeePayrollSystem
         public EmployeeDetailsWrapper(EmployeeDetails employeeDetails)
         {
             EmployeeDetails = employeeDetails;
-            this.PropertyChanged += ChangeTracker.Do_Something;
+            this.PropertyChanged += ChangeTracker.Add_Changed_Element;
         }       
 
         public EmployeeDetails EmployeeDetails { get; }
