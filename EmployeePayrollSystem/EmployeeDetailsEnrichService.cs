@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EmployeePayrollSystem
 {
@@ -12,9 +10,9 @@ namespace EmployeePayrollSystem
 
         public ObservableCollection<EmployeeDetailsWrapper> enrich(List<EmployeeDetails> employeeDetails, Employee employee, DateTime from, DateTime to)
         {
-            List<EmployeeDetailsWrapper> enrichedEmployeeDetails = employeeDetails.Select(e=>new EmployeeDetailsWrapper(e)).ToList();
+            List<EmployeeDetailsWrapper> enrichedEmployeeDetails = employeeDetails.Select(avatar=>new EmployeeDetailsWrapper(avatar)).ToList();
             for (DateTime date = from; date <= to; date = date.AddDays(1)) {
-                if (employeeDetails.Find(e => e.WorkDate.ToShortDateString().Equals(date.ToShortDateString())) == null)                
+                if (isRecordMissingForExistForDate(employeeDetails, date))                
                 {
                     EmployeeDetails ed = new EmployeeDetails();
                     ed.Employee = employee;
@@ -24,6 +22,11 @@ namespace EmployeePayrollSystem
                 }
             }
             return new ObservableCollection<EmployeeDetailsWrapper>(enrichedEmployeeDetails.OrderBy(e => e.WorkDate).ToList());
+        }
+
+        private bool isRecordMissingForExistForDate(List<EmployeeDetails> employeeDetails, DateTime date)
+        {
+            return employeeDetails.Find(e => e.WorkDate.ToShortDateString().Equals(date.ToShortDateString())) == null;
         }
     }
 }

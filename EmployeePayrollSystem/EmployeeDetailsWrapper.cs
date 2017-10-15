@@ -10,11 +10,12 @@ namespace EmployeePayrollSystem
     class EmployeeDetailsWrapper: BaseModel, INotifyDataErrorInfo
     {
         private Regex DESCRIPTION_REGULAR_EXPRESSION = new Regex("Shift-[A-D];+");
+
         public EmployeeDetailsWrapper(EmployeeDetails employeeDetails)
         {
-            EmployeeDetails = employeeDetails;
+            EmployeeDetails = (EmployeeDetails) employeeDetails.Clone();
             this.PropertyChanged += ChangeTracker.Add_Changed_Element;
-        }       
+        }
 
         public EmployeeDetails EmployeeDetails { get; }
 

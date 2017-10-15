@@ -5,7 +5,7 @@ namespace EmployeePayrollSystem
 {
     class EmpDbContext: DbContext
     {
-        public EmpDbContext():base("ExuberantPersistence")
+        public EmpDbContext():base("EmployeeDatabase")
         {
                     
         }

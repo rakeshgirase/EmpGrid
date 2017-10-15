@@ -1,14 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeePayrollSystem
 {
-   public class Employee : BaseModel
+    public class Employee : BaseModel
     {
         
         private int _empId;

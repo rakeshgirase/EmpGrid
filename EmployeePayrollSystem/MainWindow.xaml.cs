@@ -14,9 +14,11 @@ namespace EmployeePayrollSystem
         private ObservableCollection<EmployeeDetailsWrapper> enrichedEmployeeDetails;
         private EmployeeService employeeService;
         private EmployeeDetailsEnrichService employeeDetailsEnrichService;
+        private static MainWindow mainWindow;
         public MainWindow()
         {
             InitializeComponent();
+            mainWindow = this;
             employeeService = new EmployeeService();
             employeeDetailsEnrichService = new EmployeeDetailsEnrichService();
             Loaded += LoadData;            
@@ -78,19 +80,19 @@ namespace EmployeePayrollSystem
             DateTime to = pay_end_date.SelectedDate.Value;
             employeeDetailsFromDatabase = await employeeService.GetPayDetail(selectedEmployee, from, to);
             enrichedEmployeeDetails = employeeDetailsEnrichService.enrich(employeeDetailsFromDatabase, selectedEmployee, from, to);
-            totalHours.Content = sumWorkHours(enrichedEmployeeDetails);
-            totalHours.DataContext = enrichedEmployeeDetails;
+            //totalHours.Content = SumWorkHours(enrichedEmployeeDetails);
             employeePayGrid.ItemsSource = enrichedEmployeeDetails;
             ChangeTracker.Clear();
         }
 
-        private int sumWorkHours(ObservableCollection<EmployeeDetailsWrapper> enrichedEmployeeDetails)
+        public static void SumWorkHours()
         {
             int totalWorkHours = 0;
-            foreach (var empDetails in enrichedEmployeeDetails ) {
+            foreach (var empDetails in mainWindow.enrichedEmployeeDetails)
+            {
                 totalWorkHours += empDetails.HoursWorked;
             }
-            return totalWorkHours;
+            mainWindow.totalHours.Content = totalWorkHours;
         }
 
         public void Pay_Start_Date_Changed(object sender, EventArgs e)
@@ -112,11 +114,6 @@ namespace EmployeePayrollSystem
         private void Save(object sender, RoutedEventArgs e)
         {
             employeeService.saveEmployeeDetails(ChangeTracker.changedItems, employeeDetailsFromDatabase);            
-        }
-
-        private void employeePayGrid_CurrentCellChanged(object sender, EventArgs e)
-        {
-            MessageBox.Show(e.ToString());
         }
     }
 }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace EmployeePayrollSystem
 {
     [Table("EmployeeHours")]
-    public class EmployeeDetails : BaseModel
+    public class EmployeeDetails : BaseModel, ICloneable
     {
         private Employee _employee;
         [ForeignKey("EmpId")]
@@ -57,5 +57,16 @@ namespace EmployeePayrollSystem
 
             }
         }
-   }
+
+        public Object Clone()
+        {
+            EmployeeDetails cloned = new EmployeeDetails();
+            cloned.Employee = this.Employee;
+            cloned.EmpId = this.EmpId;
+            cloned.WorkDate = this.WorkDate;
+            cloned.HoursWorked = this.HoursWorked;
+            cloned.Description = this.Description;
+            return cloned;
+        }
+    }
 }

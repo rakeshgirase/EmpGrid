@@ -48,13 +48,13 @@ namespace EmployeePayrollSystem
                 foreach (var changedItem in changedItems)
                 {
                     EmployeeDetails recordFromDatabase = employeeDetailsFromDatabase.Find(e => e.WorkDate.ToShortDateString().Equals(changedItem.WorkDate.ToShortDateString()));
-                    if (recordFromDatabase == null)
+                    if (recordFromDatabase == null)//Add Record
                     {
                         ctx.EmployeeDetails.Add(changedItem);
                         ctx.Entry(changedItem).State = EntityState.Added;
                         await ctx.SaveChangesAsync();
                     }
-                    else if(isChangedItemActuallyUpdated(recordFromDatabase, changedItem))
+                    else if(isChangedItemActuallyUpdated(recordFromDatabase, changedItem))//Update Records
                     {
                         ctx.EmployeeDetails.Attach(changedItem);
                         ctx.Entry(changedItem).State = EntityState.Modified;
