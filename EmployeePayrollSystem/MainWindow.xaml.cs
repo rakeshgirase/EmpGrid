@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Windows;
 
 namespace EmployeePayrollSystem
@@ -8,18 +9,25 @@ namespace EmployeePayrollSystem
     public partial class MainWindow : Window
     {
         private ObservableCollection<Employee> employees;
-        private int index = 0;
-        private EmployeeService employeeService;
-        private List<EmployeeDetails> employeeDetails;
+        private int index = 0;        
+        private List<EmployeeDetails> employeeDetailsFromDatabase;
         private ObservableCollection<EmployeeDetailsWrapper> enrichedEmployeeDetails;
+        private EmployeeService employeeService;
+        private EmployeeDetailsEnrichService employeeDetailsEnrichService;
 
         public MainWindow()
         {
-            employeeService = new EmployeeService();
             InitializeComponent();
-            Load();
+            employeeService = new EmployeeService();
+            employeeDetailsEnrichService = new EmployeeDetailsEnrichService();
+            Loaded += LoadData;            
+        }
+
+        private void LoadData(object sender, RoutedEventArgs e)
+        {
             pay_start_date.SelectedDate = getLastDay(DayOfWeek.Sunday);
             pay_end_date.SelectedDate = pay_start_date.SelectedDate.Value.AddDays(13);
+            LoadEmployees();            
         }
 
         public DateTime getLastDay(DayOfWeek day) {
@@ -29,7 +37,7 @@ namespace EmployeePayrollSystem
             return lastDay;
         }
 
-        private async void Load() {
+        private async void LoadEmployees() {
             employees = await employeeService.GetEmployeesAsync();
             empShortDetails.ItemsSource = employees;
             empShortDetails.SelectedItem = employees[index];
@@ -69,10 +77,11 @@ namespace EmployeePayrollSystem
             }
             DateTime from = pay_start_date.SelectedDate.Value;
             DateTime to = pay_end_date.SelectedDate.Value;
-            employeeDetails = await employeeService.GetPayDetail(selectedEmployee, from, to);
-            enrichedEmployeeDetails = new EmployeeDetailsEnrichService().enrich(employeeDetails, selectedEmployee, from, to);
+            employeeDetailsFromDatabase = await employeeService.GetPayDetail(selectedEmployee, from, to);
+            enrichedEmployeeDetails = employeeDetailsEnrichService.enrich(employeeDetailsFromDatabase, selectedEmployee, from, to);
             totalHours.Content = sumWorkHours(enrichedEmployeeDetails);
             employeePayGrid.ItemsSource = enrichedEmployeeDetails;
+            ChangeTracker.Clear();
         }
 
         private int sumWorkHours(ObservableCollection<EmployeeDetailsWrapper> enrichedEmployeeDetails)
@@ -102,7 +111,12 @@ namespace EmployeePayrollSystem
 
         private void Save(object sender, RoutedEventArgs e)
         {
-            employeeService.saveEmployeeDetails(enrichedEmployeeDetails);            
+            employeeService.saveEmployeeDetails(ChangeTracker.changedItems, employeeDetailsFromDatabase);            
+        }
+
+        private void employeePayGrid_CurrentCellChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show(e.ToString());
         }
     }
 }

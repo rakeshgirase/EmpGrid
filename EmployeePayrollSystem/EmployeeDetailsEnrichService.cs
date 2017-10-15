@@ -14,7 +14,7 @@ namespace EmployeePayrollSystem
         {
             List<EmployeeDetailsWrapper> enrichedEmployeeDetails = employeeDetails.Select(e=>new EmployeeDetailsWrapper(e)).ToList();
             for (DateTime date = from; date <= to; date = date.AddDays(1)) {
-                if (employeeDetails.Find(e => e.WorkDate.Equals(date)) == null)                
+                if (employeeDetails.Find(e => e.WorkDate.ToShortDateString().Equals(date.ToShortDateString())) == null)                
                 {
                     EmployeeDetails ed = new EmployeeDetails();
                     ed.Employee = employee;
@@ -23,7 +23,7 @@ namespace EmployeePayrollSystem
                     enrichedEmployeeDetails.Add(new EmployeeDetailsWrapper(ed));
                 }
             }
-            return new ObservableCollection<EmployeeDetailsWrapper>(enrichedEmployeeDetails.OrderBy(e => e.WorkDate).ToList()); ;
+            return new ObservableCollection<EmployeeDetailsWrapper>(enrichedEmployeeDetails.OrderBy(e => e.WorkDate).ToList());
         }
     }
 }

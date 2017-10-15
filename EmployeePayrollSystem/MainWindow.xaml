@@ -39,7 +39,7 @@
         <Button Content="Previous" HorizontalAlignment="Left" Margin="19,132,0,0" VerticalAlignment="Top" Width="75" Click="Previous_Button_Click"/>
         <Button Content="Next" HorizontalAlignment="Left" Margin="672,132,0,0" VerticalAlignment="Top" Width="75" Click="Next_Button_Click"/>
 
-        <DataGrid x:Name="employeePayGrid" Margin="12,200,12,200" HorizontalAlignment="Center" VerticalAlignment="Center" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" ItemsSource="{Binding}">
+            <DataGrid x:Name="employeePayGrid" Margin="12,200,12,200" HorizontalAlignment="Center" VerticalAlignment="Center" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" ItemsSource="{Binding}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Binding="{Binding index}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Emp #" Binding="{Binding EmpId}" IsReadOnly="True"/>
@@ -47,7 +47,7 @@
                     <DataGridTextColumn Header="Last Name" Binding="{Binding Employee.LastName}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Hire Date" Binding="{Binding Employee.HireDate, Converter={StaticResource DateConverter}}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Work Date" Binding="{Binding WorkDate, Converter={StaticResource DateConverter}}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
                     <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked, Converter={StaticResource MinutesToHoursConverter}}"/>
             </DataGrid.Columns>
         </DataGrid>

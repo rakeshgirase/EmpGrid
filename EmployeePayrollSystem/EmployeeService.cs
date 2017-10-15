@@ -39,14 +39,24 @@ namespace EmployeePayrollSystem
                 return await ctx.EmployeeDetails.Include(e=>e.Employee).Where(ed => (ed.EmpId == selectedEmployee.EmpId)).Where(ed=>ed.WorkDate>=from && ed.WorkDate<=to).AsNoTracking().ToListAsync();
             }
         }
+        
 
-        public async void saveEmployeeDetails(ObservableCollection<EmployeeDetailsWrapper> employeeDetailsWrappers) {
+        public async void saveEmployeeDetails(List<EmployeeDetails> changedItems, List<EmployeeDetails> employeeDetailsFromDatabase)
+        {
             using (var ctx = new EmpDbContext())
             {
-                foreach (var employeeDetailsWrapper in employeeDetailsWrappers) {
-                    EmployeeDetails employeeDetails = employeeDetailsWrapper.EmployeeDetails;
-                    ctx.EmployeeDetails.Attach(employeeDetails);
-                    ctx.Entry(employeeDetails).State = EntityState.Modified;
+                foreach (var changedItem in changedItems)
+                {
+                    if (employeeDetailsFromDatabase.Find(e => e.WorkDate.ToShortDateString().Equals(changedItem.WorkDate.ToShortDateString())) == null)
+                    {
+                        ctx.EmployeeDetails.Add(changedItem);
+                        ctx.Entry(changedItem).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        ctx.EmployeeDetails.Attach(changedItem);
+                        ctx.Entry(changedItem).State = EntityState.Modified;
+                    }                        
                     await ctx.SaveChangesAsync();
                 }
             }

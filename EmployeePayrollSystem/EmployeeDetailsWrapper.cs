@@ -13,17 +13,19 @@ namespace EmployeePayrollSystem
         public EmployeeDetailsWrapper(EmployeeDetails employeeDetails)
         {
             EmployeeDetails = employeeDetails;
-        }
+            this.PropertyChanged += ChangeTracker.Do_Something;
+        }       
 
         public EmployeeDetails EmployeeDetails { get; }
 
-        public int EmpId { get { return EmployeeDetails.EmpId; } }
+        public int EmpId { get { return EmployeeDetails.EmpId; } set { EmployeeDetails.EmpId = value; } }
 
         public Employee Employee { get { return EmployeeDetails.Employee; } }
 
         public string Description { get { return EmployeeDetails.Description; }
             set {
                 EmployeeDetails.Description = value;
+                RaisePropertyChanged();
                 ValidateProperty(nameof(Description));
             }
         }
@@ -31,7 +33,7 @@ namespace EmployeePayrollSystem
         public int HoursWorked { get { return EmployeeDetails.HoursWorked; }
         set {
                 EmployeeDetails.HoursWorked = value;
-                //RaisePropertyChanged();
+                RaisePropertyChanged();
                 ValidateProperty(nameof(HoursWorked));
             }
         }

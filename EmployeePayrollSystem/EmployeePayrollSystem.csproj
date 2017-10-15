@@ -70,6 +70,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BaseModel.cs" />
+    <Compile Include="ChangeTracker.cs" />
     <Compile Include="MinutesToHoursConverter.cs" />
     <Compile Include="EmployeeDetailsEnrichService.cs" />
     <Compile Include="EmpConverter.cs" />

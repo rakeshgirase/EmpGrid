@@ -7,11 +7,11 @@ namespace EmployeePayrollSystem
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void RaisePropertyChanged([CallerMemberName] string caller = "")
+        protected virtual void RaisePropertyChanged([CallerMemberName] string caller = "")
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(caller));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(caller));
             }
         }
     }
