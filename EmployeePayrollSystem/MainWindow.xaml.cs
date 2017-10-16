@@ -77,22 +77,9 @@ namespace EmployeePayrollSystem
             DateTime to = pay_end_date.SelectedDate.Value.Date;
             employeeDetailsFromDatabase = await employeeService.GetPayDetail(selectedEmployee, from, to);
             enrichedEmployeeDetails = employeeDetailsEnrichService.enrich(employeeDetailsFromDatabase, selectedEmployee, from, to);
-            SumWorkHours();
+            Refresh_Total_Hours(null, null);
             employeePayGrid.ItemsSource = enrichedEmployeeDetails;
             ChangeTracker.Clear();
-        }
-
-        public int SumWorkHours()
-        {
-            int temp = 0;
-            //foreach (var empDetails in enrichedEmployeeDetails)
-            //{
-              //  temp += empDetails.HoursWorked;
-            //}
-
-            return temp;
-            //totalHours.Content = totalWorkHours;
-             
         }
 
         public void Pay_Start_Date_Changed(object sender, EventArgs e)
@@ -114,6 +101,16 @@ namespace EmployeePayrollSystem
         private void Save(object sender, RoutedEventArgs e)
         {
             employeeService.saveEmployeeDetails(ChangeTracker.changedItems, employeeDetailsFromDatabase);            
+        }
+
+        private void Refresh_Total_Hours(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            int temp = 0;
+            foreach (var empDetails in enrichedEmployeeDetails)
+            {
+             temp += empDetails.HoursWorked;
+            }
+            TotalHours.Content = temp;
         }
     }
 }

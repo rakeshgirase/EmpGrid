@@ -40,7 +40,7 @@
         <Button Content="Previous" HorizontalAlignment="Left" Margin="19,132,0,0" VerticalAlignment="Top" Width="75" Click="Previous_Button_Click"/>
         <Button Content="Next" HorizontalAlignment="Left" Margin="672,132,0,0" VerticalAlignment="Top" Width="75" Click="Next_Button_Click"/>
 
-        <DataGrid x:Name="employeePayGrid" Margin="12,200,12,200" HorizontalAlignment="Center" VerticalAlignment="Center" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" ItemsSource="{Binding}">
+        <DataGrid x:Name="employeePayGrid" Margin="12,200,12,200" HorizontalAlignment="Center" VerticalAlignment="Center" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectionChanged="Refresh_Total_Hours">
             <DataGrid.Columns>                    
                     <DataGridTextColumn Header="Emp #" Binding="{Binding EmpId}" Width="Auto" IsReadOnly="True"/>
                     <DataGridTextColumn Header="First Name" Binding="{Binding Employee.FirstName}" Width="Auto" IsReadOnly="True"/>
@@ -54,9 +54,9 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Label Content="Total Hours" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Grid.Row="27"/>
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="70" Grid.Row="27">
-                    <!--<Label Name="totalHours" HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding ElementName=employeePayGrid, Path=SelectedItem.HoursWorked, UpdateSourceTrigger=PropertyChanged}"/>-->
-                    <!--<Label Name="totalHours" HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding Source={StaticResource SumTotalWorkHours}, UpdateSourceTrigger=PropertyChanged}"/>-->
-                    <Label Name="totalHours" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <!--<Label Name="TotalHours" HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding ElementName=employeePayGrid, Path=SelectedItem.HoursWorked, UpdateSourceTrigger=PropertyChanged}"/>-->
+                    <!--<Label Name="TotalHours" HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding Source={StaticResource SumTotalWorkHours}, UpdateSourceTrigger=PropertyChanged}"/>-->
+                    <Label Name="TotalHours" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Border>
         </StackPanel>
         <Button Name="Apply" Content="Apply" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Grid.Row="27" Click="Save"/>
