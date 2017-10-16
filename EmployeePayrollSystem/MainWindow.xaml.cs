@@ -110,7 +110,8 @@ namespace EmployeePayrollSystem
             {
              temp += empDetails.HoursWorked;
             }
-            TotalHours.Content = temp;
+            object convertedToHours = new MinutesToHoursConverter().Convert(temp, null, null, null);
+            TotalHours.Content = convertedToHours;
         }
     }
 }

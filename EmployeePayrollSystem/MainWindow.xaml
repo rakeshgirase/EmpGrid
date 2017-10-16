@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmployeePayrollSystem"        
         mc:Ignorable="d"
-        Title="Employee Pay" Width="800" Height="800">
+        Title="Employee Pay" Width="800" Height="800" BorderThickness="1">
     <Window.Resources>
         <local:DateConverter x:Key="DateConverter"/>
         <local:EmpConverter x:Key="EmpConverter"/>
@@ -13,53 +13,70 @@
         <ObjectDataProvider x:Key="SumTotalWorkHours" ObjectType="{x:Type local:MainWindow}" MethodName="SumWorkHours" />
     </Window.Resources>
     <ScrollViewer>
-    <Grid>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="35" Margin="265,10,0,0" VerticalAlignment="Top" Width="250">
-            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="35" Margin="-166,114,-146,-116" VerticalAlignment="Top" Width="560">
-                <ComboBox Name="empShortDetails" ItemsSource="{Binding}" SelectionChanged="Refresh_Data_Grid">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="2">
-                                <TextBlock Text="{Binding EmpId}"/>
-                                <TextBlock Text=" - "/>
-                                <TextBlock Text="{Binding LastName}"/>
-                                <TextBlock Text=" , "/>
-                                <TextBlock Text="{Binding FirstName}"/>
-                                <TextBlock Text=" - "/>
-                                <TextBlock Text="{Binding HireDate, Converter={StaticResource DateConverter}}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </Border>
-        </Border>
-        <Label Content="Pay Begin" HorizontalAlignment="Left" Margin="30,60,0,0" VerticalAlignment="Top" Width="90"/>
-        <Label Content="Pay End" HorizontalAlignment="Right" Margin="0,63,117,0" VerticalAlignment="Top" Width="90"/>
-        <DatePicker Name="pay_start_date" HorizontalAlignment="Left" Height="23" Margin="100,63,0,0" Text="TextBox" VerticalAlignment="Top" Width="120" SelectedDateChanged="Pay_Start_Date_Changed"/>
-        <DatePicker Name="pay_end_date" HorizontalAlignment="Left" Height="23" Margin="645,66,0,0" Text="TextBox" VerticalAlignment="Top" Width="120" SelectedDateChanged="Pay_End_Date_Changed"/>
-        <Button Content="Previous" HorizontalAlignment="Left" Margin="19,132,0,0" VerticalAlignment="Top" Width="75" Click="Previous_Button_Click"/>
-        <Button Content="Next" HorizontalAlignment="Left" Margin="672,132,0,0" VerticalAlignment="Top" Width="75" Click="Next_Button_Click"/>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+            <ComboBox x:Name="empShortDetails" HorizontalAlignment="Center" Margin="131,121,123,617" Width="521" ItemsSource="{Binding}" SelectionChanged="Refresh_Data_Grid" Height="31">
 
-        <DataGrid x:Name="employeePayGrid" Margin="12,200,12,200" HorizontalAlignment="Center" VerticalAlignment="Center" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectionChanged="Refresh_Total_Hours">
-            <DataGrid.Columns>                    
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="2">
+                            <TextBlock Text="{Binding EmpId}"/>
+                            <TextBlock Text=" - "/>
+                            <TextBlock Text="{Binding LastName}"/>
+                            <TextBlock Text=" , "/>
+                            <TextBlock Text="{Binding FirstName}"/>
+                            <TextBlock Text=" - "/>
+                            <TextBlock Text="{Binding HireDate, Converter={StaticResource DateConverter}}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Label Content="Pay Begin" HorizontalAlignment="Left" Margin="30,60,0,0" VerticalAlignment="Top" Width="90"/>
+            <Label Content="Pay End" HorizontalAlignment="Right" Margin="0,66,147,0" VerticalAlignment="Top" Width="73"/>
+            <DatePicker Name="pay_start_date" HorizontalAlignment="Left" Height="23" Margin="100,63,0,0" Text="TextBox" VerticalAlignment="Top" Width="120" SelectedDateChanged="Pay_Start_Date_Changed"/>
+            <DatePicker Name="pay_end_date" HorizontalAlignment="Right" Height="23" Margin="0,66,22,0" Text="TextBox" VerticalAlignment="Top" Width="120" SelectedDateChanged="Pay_End_Date_Changed"/>
+            <Button Content="Previous" HorizontalAlignment="Left" Margin="19,132,0,0" VerticalAlignment="Top" Width="75" Click="Previous_Button_Click"/>
+            <Button Content="Next" HorizontalAlignment="Right" Margin="0,132,22,0" VerticalAlignment="Top" Width="75" Click="Next_Button_Click" RenderTransformOrigin="0.154,0.383"/>
+
+            <DataGrid x:Name="employeePayGrid" Margin="100,224,90,248" HorizontalAlignment="Center" VerticalAlignment="Center" AlternatingRowBackground="LightBlue" AlternationCount="2" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectionChanged="Refresh_Total_Hours" Height="297" Width="585">
+                <DataGrid.Columns>
                     <DataGridTextColumn Header="Emp #" Binding="{Binding EmpId}" Width="Auto" IsReadOnly="True"/>
                     <DataGridTextColumn Header="First Name" Binding="{Binding Employee.FirstName}" Width="Auto" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Last Name" Binding="{Binding Employee.LastName}" Width="Auto" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Hire Date" Binding="{Binding Employee.HireDate, Converter={StaticResource DateConverter}}" Width="Auto" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Work Date" Binding="{Binding WorkDate, Converter={StaticResource DateConverter}}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="Auto" />
-                    <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked, Converter={StaticResource MinutesToHoursConverter}}" Width="Auto"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Label Content="Total Hours" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Grid.Row="27"/>
-            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="70" Grid.Row="27">
-                    <!--<Label Name="TotalHours" HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding ElementName=employeePayGrid, Path=SelectedItem.HoursWorked, UpdateSourceTrigger=PropertyChanged}"/>-->
-                    <!--<Label Name="TotalHours" HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding Source={StaticResource SumTotalWorkHours}, UpdateSourceTrigger=PropertyChanged}"/>-->
-                    <Label Name="TotalHours" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                </Border>
-        </StackPanel>
-        <Button Name="Apply" Content="Apply" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Grid.Row="27" Click="Save"/>
-    </Grid>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="150"  ElementStyle="{StaticResource DataGridColumnStyle}"/>
+                    <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked, Converter={StaticResource MinutesToHoursConverter}}" Width="*" ElementStyle="{StaticResource DataGridColumnStyle}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <Button Name="Apply" Content="Apply" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Click="Save" Margin="354,605,346,144"/>
+            <Border BorderBrush="Black" BorderThickness="1" Height="30" Width="70" Margin="589,567,116,172" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="-0.065,8.915">
+                <!--<Label Name="TotalHours" HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding ElementName=employeePayGrid, Path=SelectedItem.HoursWorked, UpdateSourceTrigger=PropertyChanged}"/>-->
+                <!--<Label Name="TotalHours" HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding Source={StaticResource SumTotalWorkHours}, UpdateSourceTrigger=PropertyChanged}"/>-->
+                <Label x:Name="TotalHours" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+
+            </Border>
+            <Label Content="Total Hours" HorizontalAlignment="Center" VerticalAlignment="Center" Width="90" Margin="494,571,191,172"/>
+            <Label Content="Employee Pay Details" Margin="10,10,0,0" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20">
+                <Label.BorderBrush>
+                    <RadialGradientBrush>
+                        <GradientStop Color="Black" Offset="0.183"/>
+                        <GradientStop Color="White" Offset="1"/>
+                        <GradientStop Color="Black" Offset="0.039"/>
+                    </RadialGradientBrush>
+                </Label.BorderBrush>
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="-0.601"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="-3.99"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+
+        </Grid>
     </ScrollViewer>
 </Window>

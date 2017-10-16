@@ -10,7 +10,7 @@ namespace EmployeePayrollSystem
 
         public ObservableCollection<EmployeeDetailsWrapper> enrich(List<EmployeeDetails> employeeDetails, Employee employee, DateTime from, DateTime to)
         {
-            List<EmployeeDetailsWrapper> enrichedEmployeeDetails = employeeDetails.Select(avatar=>new EmployeeDetailsWrapper(avatar)).ToList();
+            List<EmployeeDetailsWrapper> enrichedEmployeeDetails = employeeDetails.Select(ed=>new EmployeeDetailsWrapper(ed)).ToList();
             for (DateTime date = from; date <= to; date = date.AddDays(1)) {
                 if (isRecordMissingForExistForDate(employeeDetails, date))                
                 {

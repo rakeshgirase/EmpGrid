@@ -50,15 +50,17 @@ namespace EmployeePayrollSystem
             {
                 if (HoursWorked < 1 || HoursWorked > 600)
                 {
-                    AddError(propertyName, "Hours Worked should be between 1 and 600!!!");
+                    AddError(propertyName, "Hours Worked should be between 1 and 600 Minutes or 00:01 to 10:00 Hours!!!");
                 }
             }
             else if (propertyName.Equals("Description"))
             {
-                Match match = DESCRIPTION_REGULAR_EXPRESSION.Match(Description);
-                if (!match.Success)
-                {
-                    AddError(propertyName, "Description field can only Have Shift-A, Shift-B, Shift-C or Shift-D separated with ;");
+                if (!String.IsNullOrEmpty(Description)) {
+                    Match match = DESCRIPTION_REGULAR_EXPRESSION.Match(Description);
+                    if (!match.Success)
+                    {
+                        AddError(propertyName, "Description field can only Have Shift-A, Shift-B, Shift-C or Shift-D separated with ;");
+                    }
                 }
             }
         }

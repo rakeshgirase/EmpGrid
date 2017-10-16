@@ -21,10 +21,10 @@ namespace EmployeePayrollSystem
         {
             String result = value.ToString();
             if (DESCRIPTION_REGULAR_EXPRESSION.IsMatch(value.ToString())) {
-                string[] temp = result.Split(':');
-                //TODO: Roshan Change HH:MM to Minutes here
-                //int mins = Int32.Parse(temp[0]) * 60 + temp[1];
-            }            
+                string[] temp = result.Split(':');                
+                int mins = System.Convert.ToInt32(temp[0]) * 60 + System.Convert.ToInt32(temp[1]);
+                result = mins.ToString();
+            }
             return result;
         }
     }
